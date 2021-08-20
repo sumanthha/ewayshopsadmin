@@ -1,0 +1,448 @@
+<div
+    id="orders"
+    class="page-layout carded fullwidth inner-scroll manage-orders"
+>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header accent"
+            style="
+                display: flex;
+                place-content: center space-between;
+                align-items: center;
+            "
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center"
+        >
+            <!-- APP TITLE -->
+            <div
+                class="logo mb-24 mb-sm-0"
+                style="display: flex"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-icon
+                    class="logo-icon s-32 mr-16"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '50ms', scale: '0.2' }
+                    }"
+                >
+                    subject
+                </mat-icon>
+                <span
+                    class="logo-text h1"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                    >Manage Orders</span
+                >
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper ml-sm-32">
+                <div
+                    class="search"
+                    fxFlex
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    style="
+                        flex-direction: row;
+                        box-sizing: border-box;
+                        display: flex;
+                        place-content: center flex-start;
+                        align-items: center;
+                        flex: 1 1 0%;
+                    "
+                >
+                    <mat-icon>search</mat-icon>
+                    <input
+                        #filter
+                        (keyup)="searchOrder($event.target.value)"
+                        placeholder="Search"
+                    />
+                </div>
+            </div>
+            <!-- <button mat-raised-button (click)="addSubject()">Add Orders</button> -->
+            <!-- / SEARCH -->
+        </div>
+
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+
+        <div class="content-card">
+            <div class="customer_info">
+                <div class="cus_col">
+                    <div class="order_info">
+                        <h2>
+                            <span class="material-icons"
+                                >add_shopping_cart</span
+                            >
+                            Orders Info
+                        </h2>
+                        <!-- <p (click)="exporter.exportTable('xlsx', {fileName:'order-' + dlFilename})">Export Data
+                  </p> -->
+                        <div class="order_info_cont">
+                            <div class="mat-elevation-z8 removeshadow">
+                                <table
+                                    mat-table
+                                    matSort
+                                    [dataSource]="orderTable"
+                                >
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="id">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Order No
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{ orders.order_no }}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="feedback">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center"
+                                        >
+                                            Feedback
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let orders"
+                                            style="text-align: center"
+                                        >
+                                            <mat-icon
+                                                *ngIf="orders.feedback != null"
+                                                matTooltip="{{
+                                                    orders.feedback
+                                                }}"
+                                                style="cursor: pointer"
+                                                >report</mat-icon
+                                            >
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="order_date">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Order Date
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{
+                                                orders.order_date
+                                                    | date: "MM-dd-yyyy"
+                                            }}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="customer">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Customer
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{ orders.customer }}
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Weight Column -->
+                                    <ng-container
+                                        matColumnDef="Shop_name"
+                                        style="margin-right: 5px"
+                                    >
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Shop Name
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{ orders.shop_no }}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container
+                                        matColumnDef="Seller_payment_status"
+                                    >
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Seller Payment Status
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{ orders.seller_status }}
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="amount">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Amount $
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            {{ orders.amount }}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center"
+                                        >
+                                            Order Status
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let orders"
+                                            style="text-align: center"
+                                        >
+                                            <img
+                                                src="../../../../assets/images/order-icon/Ready for Pickup.png"
+                                                matTooltip="Ready for pickup"
+                                                *ngIf="
+                                                    orders.status ==
+                                                    'ready for pickup'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/New.png"
+                                                matTooltip="New"
+                                                *ngIf="orders.status == 'new'"
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Rejected.png"
+                                                matTooltip="Rejected"
+                                                *ngIf="
+                                                    orders.status == 'rejected'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Accepted.png"
+                                                matTooltip="Accepted"
+                                                *ngIf="
+                                                    orders.status == 'accepted'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Processing.png"
+                                                matTooltip="Processing"
+                                                *ngIf="
+                                                    orders.status ==
+                                                    'processing'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Completed.png"
+                                                matTooltip="Completed"
+                                                *ngIf="
+                                                    orders.status == 'completed'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Incomplete.png"
+                                                matTooltip="Incompleted"
+                                                *ngIf="
+                                                    orders.status ==
+                                                    'incomplete'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/pending.png"
+                                                matTooltip="Pending"
+                                                *ngIf="
+                                                    orders.status == 'pending'
+                                                "
+                                            />
+                                            <img
+                                                src="../../../../assets/images/order-icon/Refund Issued.png"
+                                                matTooltip="Refund issues"
+                                                *ngIf="
+                                                    orders.status ==
+                                                    'refund issued'
+                                                "
+                                            />
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            Action
+                                        </th>
+                                        <td mat-cell *matCellDef="let orders">
+                                            <!-- <a matTooltip="View Order" class="view_icon"
+                        >
+                        <img src="../../../../assets//images/order-icon/view.png" class="icon" alt="">
+                      </a> -->
+                                            <mat-icon
+                                                matTooltip="View Order"
+                                                style="
+                                                    cursor: pointer;
+                                                    font-weight: 700;
+                                                "
+                                                [routerLink]="[
+                                                    '/manage-orders/view-order',
+                                                    orders.order_no
+                                                ]"
+                                                class="action-icons"
+                                                style="cursor: pointer"
+                                                >remove_red_eye</mat-icon
+                                            >
+                                            <mat-icon
+                                                matTooltip="Order Status"
+                                                style="
+                                                    cursor: pointer;
+                                                    font-weight: 700;
+                                                "
+                                                (click)="
+                                                    modalOpen(
+                                                        orders.order_no,
+                                                        orders.customer
+                                                    )
+                                                "
+                                                class="action-icons"
+                                                style="cursor: pointer"
+                                                >format_align_left</mat-icon
+                                            >
+                                            <mat-icon
+                                                matTooltip="Payment Status"
+                                                style="
+                                                    cursor: pointer;
+                                                    font-weight: 700;
+                                                "
+                                                (click)="
+                                                    modalOpen_payment(
+                                                        orders.order_no
+                                                    )
+                                                "
+                                                class="action-icons"
+                                                style="cursor: pointer"
+                                                >payment</mat-icon
+                                            >
+
+                                            <!-- <a matTooltip="Update Order Status" class="view_icon" (click)="updateStaus()">
+                        <img src="../../../../assets//images/order-icon/update.png" class="icon" alt="">
+                      </a> -->
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="displayedColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: displayedColumns
+                                        "
+                                    ></tr>
+                                </table>
+
+                                <mat-paginator
+                                    [pageSizeOptions]="[10, 15, 20]"
+                                    showFirstLastButtons
+                                ></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / CENTER -->
+</div>
+<div class="backdrop" [ngStyle]="{ display: display }"></div>
+<div class="modal" [ngStyle]="{ display: display }" id="menu-addon">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content addon-wraapper">
+            <div class="modal-header">
+                <h4 class="modal-title head">Update Order Status</h4>
+                <br />
+                <div class="order_data">
+                    <p class="order_cls">Order No : {{ order_id }}</p>
+                    <p>Customer Name : {{ customer }}</p>
+                </div>
+                <button type="button" class="close" (click)="modalClose()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button
+                    type="button"
+                    class="refund_btn"
+                    data-dismiss="modal"
+                    (click)="order_status(order_id, 'refund issued')"
+                >
+                    REFUND ISSUED</button
+                ><br />
+                <button
+                    type="button"
+                    class="incomplete_btn"
+                    data-dismiss="modal"
+                    (click)="order_status(order_id, 'incomplete')"
+                >
+                    INCOMPLETE</button
+                ><br />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{ display: display1 }"></div>
+<div class="modal" [ngStyle]="{ display: display1 }" id="menu-addon">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content addon-wraapper">
+            <div class="modal-header">
+                <h4 class="modal-title head">Update Payment Status</h4>
+                <br />
+                <div class="order_data">
+                    <!-- <p class="order_cls">Order No : {{ order_id }}</p> -->
+                    <!-- <p>{{ customer }}</p> -->
+                </div>
+                <button type="button" class="close" (click)="modalClose()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="radio">
+                    <!-- <mat-radio-group aria-label="Select an option"> -->
+                    <input
+                        type="radio"
+                        id="html"
+                        name="fav_language"
+                        value="Paid"
+                        (change)="radioChange($event)"
+                    />
+                    PAID<br />
+
+                    <br />
+                    <input
+                        type="radio"
+                        id="html"
+                        name="fav_language"
+                        value="Un Paid"
+                        (change)="radioChange($event)"
+                    />
+                    UN PAID<br />
+                    <!-- </mat-radio-group> -->
+                </div>
+                <p style="color: red" [hidden]="showpayment_sts">
+                    Select any one payment status
+                </p>
+                <div class="update_payment">
+                    <button
+                        class="payment_update_btn"
+                        style="cursor: pointer"
+                        (click)="payment_update()"
+                    >
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

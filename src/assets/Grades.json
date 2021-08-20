@@ -1,0 +1,9 @@
+[
+    {"name" : "Grade A", "value" : "A"},
+    {"name" : "Grade B", "value" : "B"},
+    {"name" : "Grade C", "value" : "C"},
+    {"name" : "Grade D", "value" : "D"},
+    {"name" : "Grade E", "value" : "E"},
+    {"name" : "Grade F", "value" : "F"}    
+]
+

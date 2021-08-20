@@ -1,0 +1,97 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll manage-customers">
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <div class="header accent" style="display: flex;place-content: center space-between;align-items: center;"
+      fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <!-- APP TITLE -->
+      <div class="logo mb-24 mb-sm-0" style="display: flex;" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+          subject
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Manage Branch Manager</span>
+      </div>
+      <!-- / APP TITLE -->
+      <!-- SEARCH -->
+      <div class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center"
+          style="flex-direction: row;box-sizing: border-box;display: flex;place-content: center flex-start;align-items: center;flex: 1 1 0%;">
+          <mat-icon>search</mat-icon>
+          <input #filter (keyup)="searchUser($event.target.value)" placeholder="Search">
+        </div>
+      </div>
+      <button mat-raised-button [routerLink]="['/manage-branchmanager/branch','add']">Add Branch Manager</button>
+      <!-- / SEARCH -->
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+      <div class="mat-elevation-z8 removeshadow">
+        <table mat-table matSort [dataSource]="CustTable">
+          <!-- <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+            <td mat-cell *matCellDef="let customer"> {{customer.sno}} </td>
+          </ng-container> -->
+          <ng-container matColumnDef="Code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Manager Code</th>
+            <td mat-cell *matCellDef="let branchmang">  {{branchmang.Code}} </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Manager Name</th>
+            <td mat-cell *matCellDef="let branchmang" style="padding-left: 4px;padding-right: 5px;"> {{branchmang.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Branch_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Name</th>
+            <td mat-cell *matCellDef="let branchmang" style="padding-left: 4px;padding-right: 5px;"> {{branchmang.Branch_name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef> Mobile No</th>
+            <td mat-cell *matCellDef="let branchmang" style="padding-right:1%;"> {{branchmang.phone}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email Address</th>
+            <td mat-cell *matCellDef="let branchmang" style="padding-left: 4px;padding-right: 5px;"> {{branchmang.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="location">
+            <th class="w-75" mat-header-cell *matHeaderCellDef>Address</th>
+            <td mat-cell *matCellDef="let branchmang"> {{branchmang.address}} </td>
+          </ng-container>
+         
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="width: 120px;"> Actions </th>
+            <td mat-cell *matCellDef="let branchmang" >
+              <a class="view_icon" [routerLink]="['/manage-branchmanager/branch','edit',branchmang.Code]">
+                <mat-icon matTooltip="Edit branch manager" class="action-icons">edit</mat-icon>
+              </a>
+              <!-- <mat-icon matTooltip="Edit Customer" class="action-icons" (click)="editSubject(customer.subject_id)">edit</mat-icon> -->
+              <!-- <mat-icon matTooltip="Delete branch manager" class="action-icons" style="cursor: pointer;"
+                (click)="deleterBranchManager( branchmang.Code, branchmang.name)">delete
+              </mat-icon> -->
+            
+            <mat-slide-toggle  [(ngModel)]="branchmang.is_active" (change)="deleterBranchManager( branchmang.Code, branchmang.name,branchmang.is_active)" matTooltip="Delete branch manager"></mat-slide-toggle>
+              <a class="view_icon" [routerLink]="['/manage-branchmanager/view-branchmanager',branchmang.Code]">
+                <mat-icon matTooltip="View branch manager" class="action-icons">visibility</mat-icon>
+              </a>
+              <a class="view_icon" (click)="resetPassword(branchmang.email)">
+                <mat-icon matTooltip="Reset password" class="action-icons">link</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <!-- <div class="content-card" *ngIf="!(CustomerList.length >0)">
+      <ng-container matColumnDef="action">
+        <mat-cell class="nodatafound"> No data found</mat-cell>
+      </ng-container>
+    </div> -->
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

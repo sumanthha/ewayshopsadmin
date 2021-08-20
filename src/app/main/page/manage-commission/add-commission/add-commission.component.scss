@@ -1,0 +1,76 @@
+:host {
+
+    .content {
+
+        form {
+            width: 100%;
+            max-width: 800px !important;
+        }
+
+        .form-errors-model {
+            flex: 1;
+
+            code {
+                background: none !important;
+            }
+        }
+
+        .horizontal-stepper-wrapper,
+        .vertical-stepper-wrapper {
+            max-width: 800px;
+        }
+    }
+}
+::ng-deep .mat-select-content{
+    width:2000px;
+    font-size: 10px;    
+}
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+form#add_cus_form {max-width: 100% !important;}
+form#add_cus_form .mat-form-field {padding-right: 20px  !important;}
+.form-err {
+    color: red;
+    position: absolute;
+    top: 55px;
+    left: -8px;
+}
+.breat_link{cursor: pointer;}
+.mat-form-field-wrapper{
+  padding-bottom: 40px !important;
+}
+.form-err{font-size: 12px;}
+mat-form-field.ng-invalid {
+    padding-bottom: 10px;
+}
+span.percentage {    position: absolute;
+    right: 5px;
+  top: 13px;
+} 
+
+@media only screen and (max-width:767px){
+    .form_row {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+     .form_row mat-form-field.mat-form-field {
+        padding: 0 !important;
+        width: 100%;
+    }
+    ::ng-deep { 
+       .mat-form-field-wrapper {padding-bottom: 5px !important;}
+
+    }
+    .example-button-row button {margin-bottom: 15px;}
+    .example-button-row {flex-direction: column;display: flex;}
+  
+}
+.add_button
+{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

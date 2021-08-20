@@ -1,0 +1,67 @@
+<div class="navbar-top" [ngClass]="fuseConfig.layout.navbar.secondaryBackground">
+
+    <div class="logo">
+        <img class="logo-icon small_logo" src="assets/images/logos/logo-small.png">
+        <img class="logo-icon large_logo" src="assets/images/logos/logo-final.png">
+        <!-- <span class="logo-text secondary-text">Kapeesh</span> -->
+    </div>
+
+    <div class="buttons">
+
+        <button mat-icon-button class="toggle-sidebar-folded" (click)="toggleSidebarFolded()" fxHide.lt-lg>
+        </button>
+        <span class="pin_icon" *ngIf="!closeIcon">
+            <svg version="1.1" id="pin_icon" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 91 91"
+                style="enable-background:new 0 0 91 91;" xml:space="preserve">
+                <g>
+                    <path d="M39.6,31.4V45H18.1v3.4h21.5V62c0,0.9,0.8,1.7,1.7,1.7H46c3.4,0,6.3-2.6,6.7-5.9l8.7-1c0.8-0.1,1.5-0.8,1.5-1.7l0,0V38.4
+            		c0-0.9-0.6-1.6-1.5-1.7l-8.6-1c-0.4-3.3-3.2-5.9-6.7-5.9h-4.7C40.3,29.7,39.6,30.5,39.6,31.4z" />
+                    <path d="M65.2,35.6v22.2c0,0.9,0.8,1.7,1.7,1.7h3.6c3,0,5.5-2.5,5.5-5.5V39.4c0-3-2.5-5.5-5.5-5.5h-3.6
+            		C65.9,33.9,65.2,34.7,65.2,35.6z" />
+                </g>
+            </svg>
+        </span>
+        <span class="pin_icon" *ngIf="closeIcon">
+            <svg id="pin_icon" style="enable-background:new 0 0 91 91;" version="1.1" viewBox="0 0 91 91"
+                xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g>
+                    <path
+                        d="M31.7,54.2h13.6v21.5h3.4V54.2h13.6c0.9,0,1.7-0.8,1.7-1.7v-4.7c0-3.4-2.6-6.3-5.9-6.7l-1-8.7c-0.1-0.8-0.8-1.5-1.7-1.5   c0,0,0,0,0,0l-16.7,0c-0.9,0-1.6,0.6-1.7,1.5l-1,8.6c-3.3,0.4-5.9,3.2-5.9,6.7v4.7C30,53.5,30.8,54.2,31.7,54.2z" />
+                    <path
+                        d="M35.9,28.6h22.2c0.9,0,1.7-0.8,1.7-1.7v-3.6c0-3-2.5-5.5-5.5-5.5H39.7c-3,0-5.5,2.5-5.5,5.5v3.6   C34.2,27.9,35,28.6,35.9,28.6z" />
+                </g>
+            </svg>
+        </span>
+
+        <button mat-icon-button class="toggle-sidebar-opened" (click)="toggleSidebarOpened()" fxHide.gt-md>
+            <mat-icon class="secondary-text">menu</mat-icon>
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="navbar-scroll-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground" fusePerfectScrollbar
+    [fusePerfectScrollbarOptions]="{suppressScrollX: true}">
+
+    <div class="user" fxLayout="column" [ngClass]="fuseConfig.layout.navbar.secondaryBackground">
+
+        <div class="h3 username">{{username}} </div>
+
+        <!-- <div class="h5 email hint-text mt-8">adams.charlie@mail.com</div> -->
+        <div class="avatar-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground">
+            <img *ngIf="profilePic; else noPic" class="avatar" src="{{profilePic}}">
+            <ng-template #noPic>
+                <img class="avatar" src="assets/images/avatars/profile.jpg">
+            </ng-template>
+        </div>
+
+    </div>
+
+    <div class="navbar-content">
+        <fuse-navigation class="material2" layout="vertical"></fuse-navigation>
+    </div>
+
+</div>

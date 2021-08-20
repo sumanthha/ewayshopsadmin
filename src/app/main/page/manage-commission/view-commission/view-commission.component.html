@@ -1,0 +1,113 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+
+  <!-- HEADER -->
+  <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="secondary-text s-18">account_balance</mat-icon>
+        <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+        <span [routerLink]="['/manage-commission/']" class="secondary-text breat_link">Manage Commission</span>
+        <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+        <span class="secondary-text">View Commission</span>
+      </div>
+      <div class="h1 mt-16">View Commission</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content p-24 ">
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <!-- REACTIVE FORM EXAMPLE -->
+      <div class="customer_info">
+        <div class="cus_col">
+          <div class="custmer_info">
+            <h2><span class="material-icons">account_balance</span> Commission Info </h2>
+            <div class="cus_info_cont">
+              <ul>
+                <li>
+                  <p>Commission Code :</p> <span>{{commission_code}}</span>
+                </li>
+                <li>
+                  <P>Commission Name :</P> <span>{{commission_name}}</span>
+                </li>
+                <li>
+                  <P>Commission Description :</P> <span>{{commission_desc}}</span>
+                </li>
+                <li>
+                  <P>Commission Percentage :</P> <span>{{commission_percentage}} %</span>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+         
+          <div class="" *ngIf="show_branch">
+          
+            <h2><span class="material-icons">store</span> Branch Info </h2>
+            <div class="cus_info_cont" *ngFor="let branch of branch_resp">
+              <ul>
+                <li>
+                  <p>Branch Code :</p> <span>{{branch.branch_code}}</span>
+                </li>
+                <li>
+                  <P>Branch Name :</P> <span>{{branch.branch_name}}</span>
+                </li>
+                <li>
+                  <P>Email :</P> <span>{{branch.branch_email}}</span>
+                </li>
+                <li>
+                  <P>Address :</P> <span>{{branch.branch_address}} </span>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cus_col" style="display: none;">
+          <div class="order_info">
+            <h2><span class="material-icons">add_shopping_cart</span> Orders Info </h2>
+            <div class="order_info_cont">
+              <div class="mat-elevation-z8 removeshadow ">
+                <table mat-table [dataSource]="dataSource">
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let orders"> {{orders.id}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="customer_name">
+                    <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                    <td mat-cell *matCellDef="let orders"> {{orders.customer_name}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="store_name">
+                    <th mat-header-cell *matHeaderCellDef> Store Name </th>
+                    <td mat-cell *matCellDef="let orders"> {{orders.store_name}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Ordered Date </th>
+                    <td mat-cell *matCellDef="let orders"> {{orders.date}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let orders">
+                      <span class="status_icon {{orders.status}}">{{orders.status}}</span>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let orders"> <a class="view_icon"
+                        [routerLink]="['/manage-users/view-customer',orders.id]">
+                        <mat-icon matTooltip="View Order" class="action-icons">visibility</mat-icon>
+                      </a> </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / REACTIVE FORM EXAMPLE -->
+  </div>
+</div>

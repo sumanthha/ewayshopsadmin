@@ -1,0 +1,31 @@
+:host {
+
+    .content {
+
+        form {
+            width: 100%;
+            max-width: 800px !important;
+        }
+
+        .form-errors-model {
+            flex: 1;
+
+            code {
+                background: none !important;
+            }
+        }
+
+        .horizontal-stepper-wrapper,
+        .vertical-stepper-wrapper {
+            max-width: 800px;
+        }
+    }
+}
+::ng-deep .mat-select-content{
+    width:2000px;
+    font-size: 10px;   
+}
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
