@@ -1,0 +1,534 @@
+<div
+    id="reports"
+    class="page-layout carded fullwidth inner-scroll manage-report"
+>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header accent"
+            style="
+                display: flex;
+                place-content: center space-between;
+                align-items: center;
+            "
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center"
+        >
+            <!-- APP TITLE -->
+            <div
+                class="logo mb-24 mb-sm-0"
+                style="display: flex"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-icon
+                    class="logo-icon s-32 mr-16"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '50ms', scale: '0.2' }
+                    }"
+                >
+                    subject
+                </mat-icon>
+                <span
+                    class="logo-text h1"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                    >Manage Reports</span
+                >
+            </div>
+
+            <!-- / APP TITLE -->
+            <!-- SEARCH -->
+            <div class="search-wrapper ml-sm-32">
+                <div class="tablebtn">
+                    <button class="btn date_btn" (click)="showDatepopup()">
+                        <span class="material-icons">today</span>
+                        <p>Filter by</p>
+                        <div
+                            class="btn_cont"
+                            [ngClass]="showPopup ? 'btn_cont_active' : ' '"
+                        >
+                            <div class="col">
+                                <button (click)="sevenDays()">
+                                    Last 7 Days
+                                </button>
+                                <button (click)="lastMonth()">
+                                    Last Month
+                                </button>
+                                <button (click)="lastThreeMonth()">
+                                    Last 3 Months
+                                </button>
+                                <div class="date_select_form">
+                                    <div class="col__50">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Start Date</mat-label>
+                                            <input
+                                                matInput
+                                                [matDatepicker]="startDate"
+                                                (dateChange)="
+                                                    customReportbyDate()
+                                                "
+                                                [max]="toDay"
+                                                [(ngModel)]="startDateValue"
+                                            />
+                                            <mat-datepicker-toggle
+                                                matSuffix
+                                                [for]="startDate"
+                                            ></mat-datepicker-toggle>
+                                            <mat-datepicker
+                                                #startDate
+                                            ></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col__50">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>End date</mat-label>
+                                            <input
+                                                matInput
+                                                [matDatepicker]="endDate"
+                                                (dateChange)="
+                                                    customReportbyDate()
+                                                "
+                                                [max]="toDay"
+                                                [(ngModel)]="endDateValue"
+                                            />
+                                            <mat-datepicker-toggle
+                                                matSuffix
+                                                [for]="endDate"
+                                            ></mat-datepicker-toggle>
+                                            <mat-datepicker #endDate>
+                                            </mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- / SEARCH -->
+        </div>
+        <p class="result_text" *ngIf="resultInfo">
+            showing results of {{ resultInfo }}
+        </p>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+            <div class="colrow">
+                <div class="col-3 customer_list">
+                    <div class="content_box" (click)="showCustomer(cus_list)">
+                        <div class="icon">
+                            <span class="material-icons">account_circle</span>
+                        </div>
+                        <div class="box_text">
+                            <span>Invoice Reports</span>
+                            <h4>{{ totalCustomer }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 vendor_list">
+                    <div class="content_box" (click)="showVendor(ven_list)">
+                        <div class="icon">
+                            <span class="material-icons">store</span>
+                        </div>
+                        <div class="box_text">
+                            <span>Profit Reports</span>
+                            <h4>{{ totalstore_count }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 order_list">
+                    <div class="content_box" (click)="showOrder(order_list)">
+                        <div class="icon">
+                            <span class="material-icons"
+                                >add_shopping_cart</span
+                            >
+                        </div>
+                        <div class="box_text">
+                            <span>Orders Reports</span>
+                            <h4>{{ totalOrder }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- REPORTS TABLES START-->
+            <div
+                [ngClass]="showCustomerTable ? 'showtable' : 'disbaletable'"
+                class="customers_list table-cont"
+                id="customer_list"
+                #cus_list
+            >
+                <div class="data_info">
+                    <h6>Invoice List</h6>
+                    <div class="data_infos" style="width: 50%">
+                        <mat-form-field
+                            appearance="outline"
+                            appearance="outline"
+                            fxFlex="50"
+                            class="pr-4"
+                            style="    background-color: white;
+                            height: 68px;
+                            padding-left: 5px;"
+                        >   
+                            <mat-label>Select Branch*</mat-label>
+
+                            <mat-select
+                               
+                                (selectionChange)="selectBranchName($event)"
+                            >
+                                <mat-option
+                                    *ngFor="let branch of branch_list"
+                                    [value]="branch.branch_name"
+                                >
+                                    {{ branch.branch_name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="tablebtn">
+                        <button class="btn">
+                            <span class="material-icons">description</span>
+                            <p
+                                (click)="
+                                    exporter.exportTable('xlsx', {
+                                        fileName: 'customer-' + dlFilename
+                                    })
+                                "
+                            >
+                                Export Data
+                            </p>
+                        </button>
+                    </div>
+                </div>
+                <table
+                    matTableExporter
+                    #exporter="matTableExporter"
+                    mat-table
+                    [dataSource]="InvoiceTable"
+                >
+                    <!-- <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> S.No </th>
+                        <td mat-cell *matCellDef="let customer"> {{customer.sno}} </td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="Order_id">
+                        <th mat-header-cell *matHeaderCellDef>Order ID</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            {{ invoice.order_id }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Order_date">
+                        <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            
+                            {{ invoice.order_date | date: 'MM-dd-yyyy' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="shop_name">
+                        <th mat-header-cell *matHeaderCellDef>Shop Name</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            {{ invoice.shop_name }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_price">
+                        <th mat-header-cell *matHeaderCellDef>Price</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            $ {{ invoice.order_price }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Payment_type">
+                        <th mat-header-cell *matHeaderCellDef>Payment Type</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            {{ invoice.payment_type }}
+                        </td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="Payment_status">
+                        <th mat-header-cell *matHeaderCellDef>Payment status</th>
+                        <td mat-cell *matCellDef="let invoice">
+                            {{ invoice.payment_status }}
+                        </td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="seller_status">
+                        <th mat-header-cell *matHeaderCellDef>Seller Payment status</th>
+                        <td mat-cell *matCellDef="let invoice" >
+                            {{ invoice.seller_status }}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                </table>
+                <mat-paginator
+                    #paginator
+                    [pageSizeOptions]="[10, 15, 20]"
+                    showFirstLastButtons
+                ></mat-paginator>
+            </div>
+            <!-- VENDORS TABLE-->
+            <div
+                [ngClass]="showStoreTable ? 'showtable' : 'disbaletable'"
+                class="customers_list table-cont"
+                id="vendor__list"
+                #ven_list
+            >
+                <div class="data_infos">
+                    <span style="padding-right: 25px"
+                        >Total Revenue : {{ totalrevenue | number: '1.2-2'}}</span
+                    >
+                    <span>Total Profit : {{ totalprofit | number: '1.2-2' }}</span>
+                </div>
+                <div class="data_info">
+                    <h6>Profit Reports</h6>
+
+                    <div class="tablebtn">
+                        <button class="btn">
+                            <span class="material-icons">description</span>
+                            <p
+                                (click)="
+                                    exportVendor.exportTable('xlsx', {
+                                        fileName: 'profit-' + dlFilename
+                                    })
+                                "
+                            >
+                                Export Data
+                            </p>
+                        </button>
+                    </div>
+                </div>
+                <table
+                    matTableExporter
+                    #exportVendor="matTableExporter"
+                    mat-table
+                    [dataSource]="storeTable"
+                >
+                    <ng-container matColumnDef="branch_code">
+                        <th mat-header-cell *matHeaderCellDef>Store Code</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.branchcode }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="branch_name">
+                        <th mat-header-cell *matHeaderCellDef>Store Name</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.baranchname }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="branch_email">
+                        <th mat-header-cell *matHeaderCellDef>Address</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.branchaddress }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="branch_address">
+                        <th mat-header-cell *matHeaderCellDef>Email</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.branchphone }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="branch_phone">
+                        <th mat-header-cell *matHeaderCellDef>Total Revenue</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.total_revenue }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="branch_desc">
+                        <th mat-header-cell *matHeaderCellDef>Total Profit</th>
+                        <td mat-cell *matCellDef="let branch">
+                            {{ branch.total_commission }}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="storeColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: storeColumns"
+                    ></tr>
+                </table>
+
+                <mat-paginator
+                    #vendor
+                    [pageSizeOptions]="[10, 15, 20]"
+                    showFirstLastButtons
+                ></mat-paginator>
+            </div>
+            <!-- END VENDORS TABLE-->
+            <!-- ORDERS TABLE-->
+            <div
+                [ngClass]="showOrderTable ? 'showtable' : 'disbaletable'"
+                class="customers_list order__list table-cont"
+                id="order__list"
+                #order_list
+            >
+                <div class="data_info">
+                    <h6>orders List of {{ dlFileFiletername }}</h6>
+                    <div class="tablebtn">
+                        <!-- <div class="filter_btn">
+                            <mat-icon aria-hidden="false">
+                                filter_list_alt</mat-icon>
+                            <div class="filter_content">
+                                <a href="javascript:void(0);" (click)="checkOrderStatus('alldata')"> All
+                                    ({{totalOrder}})</a>
+                                <a href="javascript:void(0);"
+                                    (click)="checkOrderStatus('Ordered')">Ordered({{countOrder}})</a>
+                                <a href="javascript:void(0); " (click)="checkOrderStatus('Packing in process')">packing
+                                    in process ({{countPacking}})</a>
+                                <a href="javascript:void(0);" (click)="checkOrderStatus('Ready for delivery')">ready for
+                                    delivery ({{countReady}})</a>
+                                <a href="javascript:void(0);" (click)="checkOrderStatus('Delivered')"> Delivered
+                                    ({{countDeliverd}})</a>
+                            </div>
+                        </div> -->
+                        <button class="btn">
+                            <span class="material-icons">description</span>
+                            <p
+                                (click)="
+                                    exportOrder.exportTable('xlsx', {
+                                        fileName:
+                                            dlFileFiletername + '-' + dlFilename
+                                    })
+                                "
+                            >
+                                Export Data
+                            </p>
+                        </button>
+                    </div>
+                </div>
+                <table
+                    matTableExporter
+                    #exportOrder="matTableExporter"
+                    mat-table
+                    [dataSource]="orderTable"
+                >
+                    <!-- <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let vendor"> {{vendor.sno}} </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="order_id">
+                        <th mat-header-cell *matHeaderCellDef>Order ID</th>
+                        <td mat-cell *matCellDef="let order">{{ order.id }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_date">
+                        <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.order_date | date: 'MM-dd-yyyy' }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="customer_name">
+                        <th mat-header-cell *matHeaderCellDef>Customer Info</th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.customer_name }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef>Amount</th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.amount }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="delivery_no">
+                        <th mat-header-cell *matHeaderCellDef>Shop Name</th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.shop }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="payment_type">
+                        <th mat-header-cell *matHeaderCellDef>Payment Type</th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.payment_type }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let orders">
+                            <img
+                                src="assets/images/order-icon/Ready for Pickup.png"
+                                matTooltip="Ready for pickup"
+                                *ngIf="orders.status == 'ready for pickup'"
+                            />
+                            <img
+                                src="assets/images/order-icon/New.png"
+                                matTooltip="New"
+                                *ngIf="orders.status == 'new'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Rejected.png"
+                                matTooltip="Rejected"
+                                *ngIf="orders.status == 'rejected'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Accepted.png"
+                                matTooltip="Accepted"
+                                *ngIf="orders.status == 'accepted'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Processing.png"
+                                matTooltip="Processing"
+                                *ngIf="orders.status == 'processing'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Completed.png"
+                                matTooltip="Completed"
+                                *ngIf="orders.status == 'completed'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Incomplete.png"
+                                matTooltip="Incompleted"
+                                *ngIf="orders.status == 'incomplete'"
+                            />
+                            <img
+                                src="assets/images/order-icon/Refund Issued.png"
+                                matTooltip="Refund issues"
+                                *ngIf="orders.status == 'refund issued'"
+                            />
+                            <img
+                                src="assets/images/order-icon/pending.png"
+                                matTooltip="Pending"
+                                *ngIf="orders.status == 'pending'"
+                            />
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="orderColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: orderColumns"
+                    ></tr>
+                </table>
+
+                <mat-paginator
+                    #order
+                    [pageSizeOptions]="[10, 15, 20]"
+                    showFirstLastButtons
+                ></mat-paginator>
+            </div>
+            <!-- END ORDERS TABLE-->
+
+            <!-- REPORTS TABLES EMD-->
+        </div>
+
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

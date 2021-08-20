@@ -1,0 +1,317 @@
+<div id="profile" class="page-layout simple tabbed">
+    <!-- HEADER -->
+    <div
+        class="header p-24"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="space-between end"
+    >
+        <div
+            class="user-info"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start center"
+        >
+            <img
+                class="profile-image avatar huge"
+                [src]="profile_pic"
+                [@animate]="{
+                    value: '*',
+                    params: { delay: '50ms', scale: '0.2' }
+                }"
+            />
+            <div
+                class="name"
+                [@animate]="{
+                    value: '*',
+                    params: { delay: '100ms', x: '-25px' }
+                }"
+            >
+                {{ Profile_username }}
+            </div>
+        </div>
+    </div>
+
+    <div class="content p-24">
+        <div
+            class="mb-24"
+            fxLayout="column"
+            fxLayoutAlign="start"
+            fxLayout.gt-md="row"
+        >
+            <!-- REACTIVE FORM EXAMPLE -->
+            <form
+                class="profile-form mat-card mat-elevation-z4 p-24 mr-24"
+                fxLayout="column"
+                fxLayoutAlign="start"
+                fxFlex="1 0 auto"
+                name="form"
+                [formGroup]="form"
+            >
+                <!-- <div class="h2 mb-24">Reactive Form Example</div> -->
+                <div
+                    class="form-row"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxFlex="1 0 auto"
+                >
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>First Name</mat-label>
+                        <input
+                            matInput
+                            formControlName="first_name"
+                            [(ngModel)]="f_name"
+                            maxlength="15"
+                        />
+                        <div
+                            *ngIf="submit && f.first_name.errors"
+                            class="invalid-feedback"
+                        >
+                            <div
+                                *ngIf="f.first_name.errors.required"
+                                class="form-err"
+                            >
+                                First name field is required
+                            </div>
+                            <div
+                                *ngIf="f.first_name.errors.pattern"
+                                class="form-err"
+                            >
+                                Please enter valid firstname
+                            </div>
+                            <div *ngIf="f.first_name.errors?.cannotContainSpace" class="error">First Name can not contain space.</div>
+                        </div>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>Last Name</mat-label>
+                        <input
+                            matInput
+                            formControlName="last_name"
+                            [(ngModel)]="l_name"
+                            maxlength="15"
+                        />
+                        <div
+                            *ngIf="submit && f.last_name.errors"
+                            class="invalid-feedback"
+                        >
+                            <div
+                                *ngIf="f.last_name.errors.required"
+                                class="form-err"
+                            >
+                                Please enter last name
+                            </div>
+                            <div
+                                *ngIf="f.last_name.errors.pattern"
+                                class="form-err"
+                            >
+                                Please enter valid lastname
+                            </div>
+                            <div *ngIf="f.last_name.errors?.cannotContainSpace" class="error">Last Name can not contain space.</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div
+                    class="form-row"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxFlex="1 0 auto"
+                >
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>Email id</mat-label>
+                        <input
+                            matInput
+                            formControlName="emailid"
+                            readonly
+                            [(ngModel)]="email"
+                        />
+                        <!-- <div *ngIf="submit && f.emailid.errors" class="invalid-feedback">
+                            <div *ngIf="f.emailid.errors.required" class="form-err">Please enter email</div>
+                            <div *ngIf="f.emailid.errors.pattern" class="form-err">Please enter valid email</div>
+                        </div> -->
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>Phone</mat-label>
+                        <!-- <div class="input-group-prepend"> -->
+                        <!-- <span class="input-group-text">+1</span> -->
+                        <input
+                            (keypress)="numberOnly($event)"
+                            matInput
+                            formControlName="phone"
+                            [(ngModel)]="phone"
+                            maxlength="15"
+                        />
+                        <!-- </div> -->
+                        <div
+                            *ngIf="submit && f.phone.errors"
+                            class="invalid-feedback"
+                        >
+                            <div
+                                *ngIf="f.phone.errors.required"
+                                class="form-err"
+                            >
+                                Please enter phone no
+                            </div>
+                            <div
+                                *ngIf="f.phone.errors.pattern"
+                                class="form-err"
+                            >
+                                Please enter valid phone no
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div
+                    class="form-row"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxFlex="1 0 auto"
+                >
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>Address</mat-label>
+                        <input
+                            matInput
+                            formControlName="address"
+                            [(ngModel)]="address"
+                            maxlength="50"
+                        />
+                        <div
+                            *ngIf="submit && f.address.errors"
+                            class="invalid-feedback"
+                        >
+                            <div
+                                *ngIf="f.address.errors.required"
+                                class="form-err"
+                            >
+                                Please enter address
+                            </div>
+                            <div
+                                *ngIf="f.address.errors.pattern"
+                                class="form-err"
+                            >
+                                Please enter valid address
+                            </div>
+                            <div *ngIf="f.address.errors?.cannotContainSpace" class="error">Address can not contain space.</div>
+                        </div>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="outline"
+                        appearance="outline"
+                        fxFlex="50"
+                        class="pr-4"
+                    >
+                        <mat-label>Landmark</mat-label>
+                        <input
+                            matInput
+                            formControlName="landmark"
+                            [(ngModel)]="landmark"
+                        />
+                        <div
+                            *ngIf="submit && f.landmark.errors"
+                            class="invalid-feedback"
+                        >
+                            <div
+                                *ngIf="f.landmark.errors.required"
+                                class="form-err"
+                            >
+                                Please enter landmark
+                            </div>
+                            <div
+                                *ngIf="f.landmark.errors.pattern"
+                                class="form-err"
+                            >
+                                Please enter valid landmark
+                            </div>
+                            <div *ngIf="f.landmark.errors?.cannotContainSpace" class="error">Landmark can not contain space.</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div
+                    class="form-row"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxFlex="1 0 auto"
+                >
+                    <mat-form-field floatPlaceholder="never">
+                        <input
+                            [hidden]="true"
+                            (change)="onFileSelect($event)"
+                            type="file"
+                            accept="all/*"
+                            #fileSelect
+                        />
+                        <input
+                            readonly
+                            matInput
+                            formControlName="profile_pic"
+                            placeholder="Choose profile Image..."
+                            [(ngModel)]="profile_name"
+                        />
+                        <button
+                            matSuffix
+                            mat-icon-button
+                            class="upload_btn"
+                            (click)="fileSelect.click()"
+                            matTooltip="Select a Image file"
+                        >
+                            <mat-icon>cloud_upload</mat-icon>
+                        </button>
+                        <div *ngIf="!imgType" class="invalid-feedback">
+                            <div *ngIf="!imgType" class="form-err">
+                                Please select JPEG/PNG file
+                            </div>
+                        </div>
+                    </mat-form-field>
+
+                    <button
+                        type="button"
+                        mat-raised-button
+                        class="update_btn"
+                        color="primary"
+                        (click)="updateProfile()"
+                    >
+                        Update
+                    </button>
+                    <button
+                        type="button"
+                        mat-raised-button
+                        class="cancel_btn"
+                        color="primary"
+                        (click)="cancelProfile()"
+                    >
+                        Cancel
+                    </button>
+                </div>
+                <div class="example-button-row"></div>
+            </form>
+        </div>
+    </div>
+</div>

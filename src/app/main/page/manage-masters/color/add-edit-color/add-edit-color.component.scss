@@ -1,0 +1,97 @@
+:host {
+
+    .content {
+
+        form {
+            width: 100%;
+            max-width: 800px !important;
+        }
+
+        .form-errors-model {
+            flex: 1;
+
+            code {
+                background: none !important;
+            }
+        }
+
+        .horizontal-stepper-wrapper,
+        .vertical-stepper-wrapper {
+            max-width: 800px;
+        }
+    }
+}
+::ng-deep .mat-select-content{
+    width:2000px;
+    font-size: 10px;   
+}
+::ng-deep .ngx-mat-color-toggle .mat-icon {
+    font-size: 22px !important;
+}
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+form#add_cus_form {max-width: 100% !important;}
+form#add_cus_form .mat-form-field {padding-right: 20px  !important;}
+.form-err {
+    color: red;
+    position: absolute;
+    top: 55px;
+    left: -8px;
+}
+.breat_link{cursor: pointer;}
+.mat-form-field-wrapper{
+  padding-bottom: 40px !important;
+}
+.form-err{font-size: 12px;}
+mat-form-field.ng-invalid {
+    padding-bottom: 10px;
+}
+
+.color_choose .form-err {
+    top: 37px;
+    left: 2px;
+}
+span.color_picker {
+    font-size: 35px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+input#favcolor {
+    opacity: 0;
+    height: 20px;
+    border: 0 !important;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1000;
+}
+.color_picker mat-form-field.mat-form-field {
+    // background: green !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.color_picker .mat-form-field-infix {padding: 0 !important;margin: 0 !important;}
+.color_picker .mat-form-field-appearance-legacy .mat-form-field-wrapper {padding: 0 !important;}
+span.text_value {position: absolute;left: 40px;}
+
+@media only screen and (max-width:767px){
+    .form_row {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+     .form_row mat-form-field.mat-form-field {
+        padding: 0 !important;
+        width: 100%;
+    }
+    ::ng-deep { 
+       .mat-form-field-wrapper {padding-bottom: 5px !important;}
+
+    }
+    .example-button-row button {margin-bottom: 15px;}
+    .example-button-row {flex-direction: column;display: flex;}
+  
+}

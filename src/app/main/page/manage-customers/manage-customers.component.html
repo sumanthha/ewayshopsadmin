@@ -1,0 +1,118 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll manage-customers">
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <div class="header accent" style="display: flex;place-content: center space-between;align-items: center;"
+      fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <!-- APP TITLE -->
+      <div class="logo mb-24 mb-sm-0" style="display: flex;" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+          subject
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Manage Users</span>
+      </div>
+      <!-- / APP TITLE -->
+      <!-- SEARCH -->
+      <div class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center"
+          style="flex-direction: row;box-sizing: border-box;display: flex;place-content: center flex-start;align-items: center;flex: 1 1 0%;">
+          <mat-icon>search</mat-icon>
+          <input #filter (keyup)="searchUser($event.target.value)" placeholder="Search">
+        </div>
+      </div>
+      <button mat-raised-button [routerLink]="['/manage-users/user','add']">Add User</button>
+      <!-- / SEARCH -->
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+      <div class="mat-elevation-z8 removeshadow">
+        <table mat-table matSort [dataSource]="CustTable">
+          <!-- <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+            <td mat-cell *matCellDef="let customer"> {{customer.sno}} </td>
+          </ng-container> -->
+          <ng-container matColumnDef="fname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+            <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="lname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+            <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Phone No</th>
+            <td mat-cell *matCellDef="let user"> {{user.phone}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email Id</th>
+            <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="dob">
+            <th mat-header-cell *matHeaderCellDef> DOB </th>
+            <td mat-cell *matCellDef="let user"> {{user.dob}} </td>
+          </ng-container>
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef>Gender</th>
+            <td mat-cell *matCellDef="let user"> {{user.gender}} </td>
+          </ng-container>
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>Location</th>
+            <td mat-cell *matCellDef="let user"> {{user.location}} </td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="socialmedia">
+            <th mat-header-cell *matHeaderCellDef>Social Media</th>
+
+            <td mat-cell *matCellDef="let user">
+              <a class="view_icon" *ngIf="user.socialmedia.facebook" [routerLink]="['/manage-users/view-user',user.id]">
+                <mat-icon matTooltip="View User" class="action-icons">
+                  <img src="../../../../assets/icons/facebook.svg" alt="">
+
+                </mat-icon>
+
+              </a>
+              <a class="view_icon" *ngIf="user.socialmedia.google" [routerLink]="['/manage-users/view-user',user.id]">
+                <mat-icon matTooltip="View User" class="action-icons">
+                  <img src="../../../../assets/icons/google.svg" alt="">
+                </mat-icon>
+              </a>
+              <a class="view_icon" *ngIf="user.socialmedia.apple" [routerLink]="['/manage-users/view-user',user.id]">
+                <mat-icon matTooltip="View User" class="action-icons">
+                  <img src="../../../../assets/icons/apple.svg" alt="">
+                </mat-icon>
+              </a>
+            </td>
+          </ng-container> -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let user">
+              <a class="view_icon" [routerLink]="['/manage-users/user','edit',user.id]">
+                <mat-icon matTooltip="Edit User" class="action-icons">edit</mat-icon>
+              </a>
+              <!-- <mat-icon matTooltip="Edit Customer" class="action-icons" (click)="editSubject(customer.subject_id)">edit</mat-icon> -->
+              <mat-icon matTooltip="Delete User" class="action-icons" style="cursor: pointer;"
+                (click)="deleterCustomer( user.id, user.name)">delete
+              </mat-icon>
+              <a class="view_icon" [routerLink]="['/manage-users/view-user',user.id]">
+                <mat-icon matTooltip="View User" class="action-icons">visibility</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <!-- <div class="content-card" *ngIf="!(CustomerList.length >0)">
+      <ng-container matColumnDef="action">
+        <mat-cell class="nodatafound"> No data found</mat-cell>
+      </ng-container>
+    </div> -->
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

@@ -1,0 +1,77 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll manage-customers">
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div class="header accent" style="display: flex;place-content: center space-between;align-items: center;"
+            fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-sm-0" style="display: flex;" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    subject
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Manage
+                    Location</span>
+            </div>
+            <!-- / APP TITLE -->
+            <!-- SEARCH -->
+            <div class="search-wrapper  ml-sm-32">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center"
+                    style="flex-direction: row;box-sizing: border-box;display: flex;place-content: center flex-start;align-items: center;flex: 1 1 0%;">
+                    <mat-icon>search</mat-icon>
+                    <input #filter (keyup)="searchUser($event.target.value)" placeholder="Search">
+                </div>
+            </div>
+            <button mat-raised-button [routerLink]="['/manage-masters/locations/','add']">Add Location</button>
+            <!-- / SEARCH -->
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+            <div class="mat-elevation-z8 removeshadow">
+                <table mat-table matSort [dataSource]="locationTable">
+                    <ng-container matColumnDef="locationid">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Location Id</th>
+                        <td mat-cell *matCellDef="let location"> {{location.locationid}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="locationname">
+                        <th mat-header-cell *matHeaderCellDef> Location Name </th>
+                        <td mat-cell *matCellDef="let location"> {{location.locationname}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let location">
+                            <a class="view_icon" [routerLink]="['/manage-masters/locations','edit',location.colorid]">
+                                <mat-icon matTooltip="Edit User" class="action-icons">edit</mat-icon>
+                            </a>
+                            <mat-icon matTooltip="Delete User" class="action-icons" style="cursor: pointer;"
+                                (click)="deleteLocation(location.locationid)">delete
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator #paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>
+
+<ng-template #deleteLocationDialog>
+    <h2 matDialogTitle style="text-align: center;">Delete Location!</h2>
+    <mat-dialog-content>
+        <p style="text-align: center;">Please confirm delete location! </p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button mat-button matDialogClose color="primary" (click)="confirmdeleteLocation()"
+            class="main_btn">Delete</button>
+        <button mat-button matDialogClose color="primary">Dismiss</button>
+    </mat-dialog-actions>
+</ng-template>

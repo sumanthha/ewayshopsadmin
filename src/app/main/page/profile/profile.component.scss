@@ -1,0 +1,131 @@
+@import "src/@fuse/scss/fuse";
+
+#profile {
+    .header {
+        height: 140px;
+        min-height: 140px;
+        max-height: 140px;
+        background: url("/assets/images/backgrounds/dark-material-bg.jpg")
+            no-repeat 0 45%;
+        background-size: cover;
+
+        .profile-image {
+            margin-right: 24px;
+
+            @include media-breakpoint("sm") {
+                margin: 0 0 16px 0;
+            }
+        }
+
+        .name {
+            font-size: 34px;
+            color: #ffffff;
+
+            @include media-breakpoint("sm") {
+                margin-bottom: 32px;
+            }
+        }
+
+        .actions {
+            button {
+                text-transform: none;
+                padding: 0 16px;
+                margin: 0 0 0 8px;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+
+        mat-tab-group {
+            height: 100%;
+
+            .mat-tab-body-wrapper {
+                flex-grow: 1;
+            }
+        }
+    }
+}
+.upload_btn .mat-icon {
+    font-size: 30px !important;
+    background: #4f9ce9;
+    color: #fff;
+    width: 40px !important;
+    height: 40px !important;
+    display: block;
+    border-radius: 50%;
+    line-height: 40px !important;
+}
+.upload_btn {
+    display: block;
+    z-index: 100;
+    width: 40px !important;
+    height: 40px !important;
+}
+.input-group-text {
+    font-weight: 600;
+    background-color: white !important;
+    margin-left: -16px !important;
+    border: none;
+    margin-top: 14px;
+    font-size: 15px;
+}
+form .mat-form-field {
+    padding: 0 20px;
+}
+.update_btn {
+    display: block;
+    width: 12%;
+    margin-left: 18vw;
+    padding: 8px;
+}
+.cancel_btn {
+    display: block;
+    width: 12%;
+    margin-left: auto;
+    padding: 8px;
+}
+span.form_err {
+    color: red;
+    position: absolute;
+    left: -10px;
+    top: 55px;
+}
+mat-form-field.mat-form-field {
+    position: relative;
+}
+.profile-form .invalid-feedback {
+    position: absolute;
+    color: red;
+    top: 55px;
+    left: -10px;
+}
+
+@media only screen and (max-width: 767px) {
+    mat-form-field.mat-form-field {
+        max-width: 100% !important;
+    }
+    .form-row {
+        flex-direction: column !important;
+    }
+    form .mat-form-field {
+        padding: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .profile-form {
+        margin-right: 0 !important;
+    }
+    // .mat-form-field-appearance-outline .mat-form-field-infix{padding: 8px 0;}
+    .mat-form-field-wrapper {
+        padding-bottom: 10px;
+    }
+    .update_btn {
+        width: 100%;
+        padding: 2px;
+    }
+    .avatar.huge {
+        margin: 0 auto !important;
+    }
+}

@@ -1,0 +1,192 @@
+<div
+    id="orders"
+    class="page-layout carded fullwidth inner-scroll manage-customers"
+>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div
+            class="header accent"
+            style="
+                display: flex;
+                place-content: center space-between;
+                align-items: center;
+            "
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center"
+        >
+            <!-- APP TITLE -->
+            <div
+                class="logo mb-24 mb-sm-0"
+                style="display: flex"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-icon
+                    class="logo-icon s-32 mr-16"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '50ms', scale: '0.2' }
+                    }"
+                >
+                    subject
+                </mat-icon>
+                <span
+                    class="logo-text h1"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                    >Manage Category</span
+                >
+            </div>
+            <!-- / APP TITLE -->
+            <!-- SEARCH -->
+            <div class="search-wrapper ml-sm-32">
+                <div
+                    class="search"
+                    fxFlex
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    style="
+                        flex-direction: row;
+                        box-sizing: border-box;
+                        display: flex;
+                        place-content: center flex-start;
+                        align-items: center;
+                        flex: 1 1 0%;
+                    "
+                >
+                    <mat-icon>search</mat-icon>
+                    <input
+                        #filter
+                        (keyup)="searchUser($event.target.value)"
+                        placeholder="Search"
+                    />
+                </div>
+            </div>
+            <button
+                mat-raised-button
+                [routerLink]="['/manage-masters/categories/', 'add']"
+            >
+                Add Category
+            </button>
+            <button mat-raised-button (click)="downloadFile()">
+                Sample CSV
+            </button>
+            <input
+                [hidden]="true"
+                [value]="selected_file"
+                onchange="onFileSelect($event)"
+                (change)="onFileSelect($event)"
+                type="file"
+                accept="all/*"
+                #fileSelect
+            />
+            <button
+                matSuffix
+                mat-icon-button
+                class="upload_btn"
+                (click)="fileSelect.click()"
+                matTooltip="Bulk upload"
+            >
+                <mat-icon>cloud_upload</mat-icon>
+            </button>
+            <!-- <button mat-raised-button (click)="downloadFile()">Bulk Upload</button> -->
+            <!-- / SEARCH -->
+        </div>
+
+        <!-- / HEADER -->
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+            <div class="mat-elevation-z8 removeshadow">
+                <table mat-table matSort [dataSource]="categoryTable">
+                    <ng-container matColumnDef="category_Code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Category Code
+                        </th>
+                        <td mat-cell *matCellDef="let category">
+                            {{ category.category_Code }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="category_Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Category Name
+                        </th>
+                        <td mat-cell *matCellDef="let category">
+                            {{ category.category_Name }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let category">
+                            <a
+                                class="view_icon"
+                                [routerLink]="[
+                                    '/manage-masters/categories',
+                                    'edit',
+                                    category.category_Code
+                                ]"
+                            >
+                                <mat-icon
+                                    matTooltip="Edit Category"
+                                    class="action-icons"
+                                    >edit</mat-icon
+                                >
+                            </a>
+                            <mat-icon
+                                matTooltip="Delete Category"
+                                class="action-icons"
+                                style="cursor: pointer"
+                                (click)="
+                                    deleterCategory(
+                                        category.category_Code,
+                                        category.category_Name
+                                    )
+                                "
+                                >delete
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                </table>
+                <mat-paginator
+                    #paginator
+                    [pageSizeOptions]="[10, 15, 20]"
+                    showFirstLastButtons
+                ></mat-paginator>
+            </div>
+        </div>
+
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>
+
+<ng-template #secondDialog class="delete-dialog">
+    <h2 matDialogTitle style="text-align: center">Delete Category!</h2>
+    <mat-dialog-content>
+        <p style="text-align: center">Please confirm delete Category!</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button
+            mat-button
+            matDialogClose
+            color="primary"
+            (click)="confirmdeleteCategory()"
+            class="main_btn"
+        >
+            Delete
+        </button>
+        <button mat-button matDialogClose color="primary">Dismiss</button>
+    </mat-dialog-actions>
+</ng-template>

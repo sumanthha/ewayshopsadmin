@@ -1,0 +1,102 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" style="display: flex;place-content: center space-between;align-items: center;" fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-sm-0" style="display: flex;"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    subject
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Subjects</span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper  ml-sm-32">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center" style="flex-direction: row;box-sizing: border-box;display: flex;place-content: center flex-start;align-items: center;flex: 1 1 0%;">
+                    <mat-icon>search</mat-icon>
+                    <input #filter (keyup)="search()" [(ngModel)]="q" placeholder="Search for a subject">
+                </div>
+            </div>
+            <button mat-raised-button (click)="addSubject()">Add Subject</button>
+            <!-- / SEARCH -->        
+        </div>
+        
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+
+        
+        
+        <div class="content-card" *ngIf="subjectList.length >0">
+
+            <mat-table class="orders-table"
+                       #table [dataSource]="dataSource"
+                       matSort (matSortChange)="sortData($event)"
+                       fusePerfectScrollbar>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="subject_id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>SNO</mat-header-cell>
+                    <mat-cell *matCellDef="let subject; let i = index;">
+                        <p class="text-truncate">{{ (Current_page - 1) * page_size + i +1 }} </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Reference Column -->
+                <ng-container matColumnDef="subject_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Subject Name</mat-header-cell>
+                    <mat-cell *matCellDef="let subject" fxHide fxShow.gt-sm>
+                        <p class="text-truncate">{{subject.subject_name}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="subject_description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Subject Description</mat-header-cell>
+                    <mat-cell *matCellDef="let subject" fxHide fxShow.gt-sm>
+                        <p class="text-truncate">{{subject.subject_description}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let subject">
+                        <mat-icon matTooltip="Edit Subject" class="action-icons" (click)="editSubject(subject.subject_id)">edit</mat-icon>
+                        <mat-icon matTooltip="Delete Subject" class="action-icons" (click)="deleteSubject(subject)">delete</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let subject; columns: displayedColumns | paginate: {itemsPerPage: page_size, currentPage: page_number, totalItems: total_count}"
+                         class="order">
+                </mat-row>
+            </mat-table>
+            <pagination-controls  maxSize="3"
+                (pageChange)="paginationFn($event)">
+            </pagination-controls>
+            <!-- <mat-paginator #paginator
+                           [length]="total_count"
+                           (page)="paginationFn($event)"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator> -->
+
+        </div>
+        <div class="content-card" *ngIf="!(subjectList.length >0)">
+            <ng-container matColumnDef="action">
+                <mat-cell class="nodatafound"> No data found</mat-cell>
+            </ng-container>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

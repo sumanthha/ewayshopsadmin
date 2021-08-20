@@ -1,0 +1,188 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+    <!-- HEADER -->
+    <div
+        class="header accent p-24 h-160"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+    >
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="secondary-text s-18">home</mat-icon>
+                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                <span
+                    [routerLink]="['/manage-orders']"
+                    class="secondary-text breat_link"
+                    >Manage Orders</span
+                >
+                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                <span class="secondary-text">View Order</span>
+            </div>
+            <div class="h1 mt-16">View Order</div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content p-24">
+        <div
+            class="mb-24"
+            fxLayout="column"
+            fxLayoutAlign="start"
+            fxLayout.gt-md="row"
+        >
+            <!-- REACTIVE FORM EXAMPLE -->
+            <div class="customer_info">
+                <div class="cus_col">
+                    <div class="custmer_info">
+                        <h2>
+                            <span class="material-icons">reorder</span> Order
+                            Info
+                        </h2>
+                        <div class="cus_info_cont">
+                            <ul>
+                                <li>
+                                    <p>Order ID :</p>
+                                    <span>{{ order_id }}</span>
+                                </li>
+                                <li>
+                                    <p>Order Date :</p>
+                                    <span>{{ order_date | date }}</span>
+                                </li>
+                                <li>
+                                    <p>Delivery No :</p>
+                                    <span>{{ delivery_no }}</span>
+                                </li>
+                                <li>
+                                    <p>Amount :</p>
+                                    <span>{{ amount }}</span>
+                                </li>
+                                <li>
+                                    <p>Order Status :</p>
+                                    <span>{{ order_status }} </span>
+                                </li>
+                                <!-- <li>
+                                    <p>Payment Status :</p>
+                                    <span>{{ payment_status }}</span>
+                                </li> -->
+                                <li>
+                                    <p>Payment Type :</p>
+                                    <span>{{ payment_type }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="cus_col">
+                    <div class="custmer_info">
+                        <h2>
+                            <span class="material-icons">storefront</span> Item
+                            Info
+                        </h2>
+                        <div
+                            class="cus_info_cont"
+                            *ngFor="let item of itemlist; let i = index"
+                        >
+                            <ul>
+                                <li>
+                                    <p>Item Code :</p>
+                                    <span>{{
+                                        item.item_code[0].item_code
+                                    }}</span>
+                                </li>
+                                <li>
+                                    <p>Item Name :</p>
+                                    <span>{{ item.item.item_name }}</span>
+                                </li>
+                                <li>
+                                    <p>Item Description:</p>
+                                    <span>{{
+                                        item.item.item_description
+                                    }}</span>
+                                </li>
+                                <li>
+                                    <p>Quantity:</p>
+                                    <span>{{ item.quantity }}</span>
+                                </li>
+                                <li>
+                                    <p>Category:</p>
+                                    <span>{{
+                                        item.item_category_name[0].category
+                                            .category_name
+                                    }}</span>
+                                </li>
+                                <li>
+                                    <p>Sub Category:</p>
+                                    <span>{{
+                                        item.item_category_name[0].sub_category
+                                            .category_name
+                                    }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="cus_col">
+                    <div class="custmer_info">
+                        <h2>
+                            <span class="material-icons">account_circle</span>
+                            Customer Info
+                        </h2>
+                        <div class="cus_info_cont">
+                            <ul>
+                                <li>
+                                    <p>Name :</p>
+                                    <span>{{
+                                        customerlist[0].first_name
+                                    }}</span>
+                                </li>
+                                <li>
+                                    <p>Phone :</p>
+                                    <span>{{
+                                        customerlist[0].phone_number
+                                    }}</span>
+                                </li>
+                                <li>
+                                    <P>Email :</P>
+                                    <span>{{ customerlist[0].email }}</span>
+                                </li>
+
+                                <li>
+                                    <P>Location :</P>
+                                    <span>{{ customerlist[0].address }},{{customerlist[0].city}},{{customerlist[0].state}}.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="cus_col">
+                    <div class="custmer_info">
+                        <h2><span class="material-icons">shopping_cart</span> Seller Info </h2>
+                        <div class="cus_info_cont">
+                            <ul>
+                                <li>
+                                    <p>Name :</p> <span>Anand Kumar</span>
+                                </li>
+                                <li>
+                                    <P>Email :</P> <span>riyamriyas@gamil.com</span>
+                                </li>
+                                <li>
+                                    <p>Phone :</p> <span>+919543030145</span>
+                                </li>
+                                <li>
+                                    <p>Address :</p> <span>No:2,XYZ Street,Chennai One,Chennai -622102.</span>
+                                </li>
+                                <li>
+                                    <p>Post Code :</p><span>600097</span>
+                                </li>
+                                <li>
+                                    <p>City :</p> <span>Chennai</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <!-- / REACTIVE FORM EXAMPLE -->
+    </div>
+</div>
