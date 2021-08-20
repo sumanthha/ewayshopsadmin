@@ -177,8 +177,8 @@ export class ProfileComponent implements OnInit {
         this.checkImage();
         var self = this;
         const bucket = new S3({
-            accessKeyId: "AKIASHOCX7RPVYUEJTL6",
-            secretAccessKey: "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",
+            accessKeyId: "",
+            secretAccessKey: "",
             region: "us-east-1",
         });
         const contentType = name.type;
