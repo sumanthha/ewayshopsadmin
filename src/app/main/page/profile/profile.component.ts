@@ -171,6 +171,7 @@ export class ProfileComponent implements OnInit {
             this.imgType = false;
         }
     }
+    
     //File Upload AWS  S3
     ew_method(name) {
         // this.uiLoader.start();
