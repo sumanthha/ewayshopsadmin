@@ -184,6 +184,7 @@ export class ProfileComponent implements OnInit {
             region: "us-east-1",
         });
         const contentType = name.type;
+        
         const params = {
             Bucket: "",
             Key: name.name,
