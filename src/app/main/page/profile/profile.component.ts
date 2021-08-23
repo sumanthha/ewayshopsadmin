@@ -15,6 +15,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserService } from "../login/user.service";
 import { Router } from "@angular/router";
 import { NgxUiLoaderService } from "ngx-ui-loader";
+import { environment } from "environments/environment";
 
 @Component({
     selector: "profile",
@@ -113,7 +114,7 @@ export class ProfileComponent implements OnInit {
                 ],
                 phone: [
                     this.profileData.phone_number,
-                    [Validators.required, Validators.pattern("^[0-9-()s]+")],
+                    [Validators.required],
                 ],
                 emailid: [
                     this.profileData.email,
@@ -179,14 +180,14 @@ export class ProfileComponent implements OnInit {
         this.checkImage();
         var self = this;
         const bucket = new S3({
-            accessKeyId: "",
-            secretAccessKey: "",
-            region: "us-east-1",
+            accessKeyId: environment.accessKeyId,
+            secretAccessKey: environment.secretAccessKey,
+            region: environment.region,
         });
         const contentType = name.type;
         
         const params = {
-            Bucket: "",
+            Bucket: environment.bucketname,
             Key: name.name,
             Body: name,
             ACL: "public-read",
